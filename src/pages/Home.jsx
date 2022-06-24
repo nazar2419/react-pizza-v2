@@ -1,25 +1,36 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useSelector, useDispatch } from 'react-redux'
+
+import { setCategoryId } from '../redux/slices/filterSlice';
+
+import { SearchContext } from "../App";
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from "../components/Pagination";
 
-const Home = ({ searchValue }) => {
+const Home = () => {
+  const { categoryId, sort } = useSelector(state => state.filter);
+  const sortType = sort.sortProperty;
+  const dispatch = useDispatch();
+  console.log('id category', categoryId);
+
+  const { searchValue } = useContext(SearchContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [categoryId, setCategoryId] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortType, setSortType] = useState({
-    name: 'popularity',
-    sortProperty: 'rating',
-  });
+ 
+
+  const onChangeCategory = (id) => {
+    dispatch(setCategoryId(id));
+  }
 
   useEffect(() => {
     setIsLoading(true);
 
-    const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
-    const sortBy = sortType.sortProperty.replace('-', '');
+    const order = sortType.includes('-') ? 'asc' : 'desc';
+    const sortBy = sortType.replace('-', '');
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
     
@@ -39,8 +50,8 @@ const Home = ({ searchValue }) => {
     <>
       <div className="container">
           <div className="content__top">
-            <Categories value={categoryId} onClickCategory={(id) => setCategoryId(id)}/>
-            <Sort value={sortType} onChangeSort={(id) => setSortType(id)}/>
+            <Categories value={categoryId} onClickCategory={onChangeCategory}/>
+            <Sort />
           </div>
           <h2 className="content__title">All pizzas</h2>
           <div className="content__items">
