@@ -14,24 +14,24 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from "../components/Pagination";
 import { useRef } from "react";
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const {items, status} = useSelector((state) => state.pizza);
-  const { categoryId, sort, currentPage } = useSelector(state => state.filter);
+  const {items, status} = useSelector((state:any) => state.pizza);
+  const { categoryId, sort, currentPage } = useSelector((state:any) => state.filter);
  
   const sortType = sort.sortProperty;
-  const { searchValue } = useContext(SearchContext);
+  const { searchValue }:any = useContext(SearchContext);
  
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     dispatch(setCategoryId(id));
   }
 
-  const onChangePage = (page) => {
+  const onChangePage = (page:number) => {
     dispatch(setCurrentPage(page));
   }
 
@@ -43,6 +43,7 @@ const Home = () => {
     const search = searchValue ? `&search=${searchValue}` : '';
     
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         order,
         sortBy,
@@ -92,7 +93,7 @@ const Home = () => {
     isSearch.current = false;
   }, [categoryId, sortType, searchValue, currentPage]);
 
-  const pizzas = items.map((obj) => (
+  const pizzas = items.map((obj: any) => (
      <PizzaBlock key={obj.id} {...obj} />)
   );
   const skeletons =  [...new Array(6)].map((_, index) => <Skeleton key={index} />)
@@ -107,7 +108,7 @@ const Home = () => {
           <h2 className="content__title">All pizzas</h2>
           { status === 'error' ? (
             <div className="content__error-info">
-              <h2>An error occurred <icon>😕</icon></h2>
+              <h2>An error occurred <span>😕</span></h2>
               <p>
                 Sorry, but the pizzas could not be get. Please try again later
               </p>

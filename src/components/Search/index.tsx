@@ -4,26 +4,26 @@ import { SearchContext } from '../../layouts/MainLayout';
 import styles from './Search.module.scss';
 import { useState } from 'react';
 
-const Search = () => {
+const Search: React.FC = () => {
   const [value, setValue] = useState('');
-  const { setSearchValue } = useContext(SearchContext);
-  const inputRef = useRef();
+  const { setSearchValue  }:any = useContext(SearchContext);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onClickClear = () => {
     setSearchValue('');
     setValue('');
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }
 
   const updateSearchValue = useCallback(
-    debounce((str) => {
+    debounce((str: string) => {
       setSearchValue(str);
       console.log('hello');
     }, 410),
     [],
   );
 
-  const onChangeInput = (e) => {
+  const onChangeInput = (e: any) => {
     setValue(e.target.value);
     updateSearchValue(e.target.value)
   }

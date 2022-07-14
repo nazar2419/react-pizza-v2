@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
-export default function Categories({ value, onClickCategory }) {
+type CategoriesProps = {
+  value: number;
+  onClickCategory: any;
+}
+
+const Categories: React.FC<CategoriesProps> = ({ value, onClickCategory }) => {
   const categories = [
     'All',
     'Meat',
@@ -23,3 +28,5 @@ export default function Categories({ value, onClickCategory }) {
     </div>
   );
 }
+
+export default Categories

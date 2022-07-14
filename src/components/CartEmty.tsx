@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import cartEmtyImg from '../assets/img/empty-cart.png';
 
 
-const CartEmty = () => {
+const CartEmty: React.FC = () => {
   return (
     <>
       <div className="cart cart--empty">
-        <h2>Cart is empty <icon>😕</icon></h2>
+        <h2>Cart is empty <span>😕</span></h2>
         <p>
           You probably haven't ordered pizza yet.
           <br />

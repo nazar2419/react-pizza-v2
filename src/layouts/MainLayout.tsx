@@ -5,16 +5,16 @@ import { useState, createContext } from 'react';
 
 export const SearchContext = createContext('');
 
-export const MainLayout = () => {
+export const MainLayout: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
   return (
     <div className="wrapper">
-      <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+      {/* <SearchContext.Provider value={{ searchValue, setSearchValue }}> */}
         <Header />
         <div className="content">
           <Outlet/>
         </div>
-      </SearchContext.Provider>
+      {/* </SearchContext.Provider> */}
     </div>
   )
 }
